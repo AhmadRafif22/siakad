@@ -28,16 +28,37 @@
                     </div>
                     <div class="form-group">
                         <label for="Nama">Nama</label>
-                        <input type="Nama" name="Nama" class="form-control" id="Nama" ariadescribedby="Nama">
+                        <input type="Nama" name="Nama" class="form-control" id="Nama" aria-describedby="Nama">
                     </div>
                     <div class="form-group">
                         <label for="Kelas">Kelas</label>
-                        <input type="Kelas" name="Kelas" class="form-control" id="Kelas" ariadescribedby="password">
+                        <input type="Kelas" name="Kelas" class="form-control" id="Kelas" aria-describedby="password">
                     </div>
                     <div class="form-group">
                         <label for="Jurusan">Jurusan</label>
-                        <input type="Jurusan" name="Jurusan" class="form-control" id="Jurusan" ariadescribedby="Jurusan">
+                        <input type="Jurusan" name="Jurusan" class="form-control" id="Jurusan" aria-describedby="Jurusan">
                     </div>
+                    <!-- tugas -->
+                    <div class="form-group">
+                        <label for="Jk">Jenis Kelamin</label>
+                        <select name="Jk" id="Jk" class="form-control">
+                            <option value="Laki-Laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="Email" name="Email" class="form-control" id="Email" aria-describedby="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="Alamat">Alamat</label>
+                        <input type="Alamat" name="Alamat" class="form-control" id="Alamat" aria-describedby="Alamat">
+                    </div>
+                    <div class="form-group">
+                        <label for="TanggalLahir">TanggalLahir</label>
+                        <input type="Date" name="TanggalLahir" class="form-control" id="TanggalLahir" aria-describedby="TanggalLahir">
+                    </div>
+                    <!-- end tugas -->
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

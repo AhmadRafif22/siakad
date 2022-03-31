@@ -21,6 +21,14 @@
     <p>{{ $message }}</p>
 </div>
 @endif
+<!-- search -->
+<form action="{{ route('search') }}" method="get">
+    <div class="input-group">
+        <div class="form-outline">
+            <input type="search" id="form1" class="form-control" name="search" placeholder="Cari ..." value="{{ old('search' )}}" />
+        </div>
+    </div>
+</form>
 
 <table class="table table-bordered">
     <tr>
@@ -30,6 +38,7 @@
         <th>Jurusan</th>
         <th width="280px">Action</th>
     </tr>
+    @if($mahasiswa->isNotEmpty())
     @foreach ($mahasiswa as $mhs)
     <tr>
 
@@ -49,5 +58,11 @@
         </td>
     </tr>
     @endforeach
+    @else
+    <div>
+        <h2>Data kosong</h2>
+    </div>
+    @endif
 </table>
+{{ $mahasiswa->links() }}
 @endsection

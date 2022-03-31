@@ -39,6 +39,27 @@
                         <label for="Jurusan">Jurusan</label>
                         <input type="Jurusan" name="Jurusan" class="form-control" id="Jurusan" value="{{ $Mahasiswa->jurusan }}" aria-describedby="Jurusan">
                     </div>
+                    <!-- tugas -->
+                    <div class="form-group">
+                        <label for="Jk">Jk</label>
+                        <select name="Jk" id="Jk" class="form-control">
+                            <option value="Laki-Laki" {{($Mahasiswa->jk === 'Laki-Laki') ? 'Selected' : ''}}>Laki-Laki</option>
+                            <option value="Perempuan" {{($Mahasiswa->jk === 'Perempuan') ? 'Selected' : ''}}>Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="Email" name="Email" class="form-control" id="Email" value="{{ $Mahasiswa->email }}" aria-describedby="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="Alamat">Alamat</label>
+                        <input type="Alamat" name="Alamat" class="form-control" id="Alamat" value="{{ $Mahasiswa->alamat }}" aria-describedby="Alamat">
+                    </div>
+                    <div class="form-group">
+                        <label for="TanggalLahir">TanggalLahir</label>
+                        <input type="Date" name="TanggalLahir" class="form-control" id="TanggalLahir" value="{{ $Mahasiswa->tanggalLahir }}" aria-describedby="TanggalLahir">
+                    </div>
+                    <!-- end tugas -->
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
