@@ -44,7 +44,7 @@
 
         <td>{{ $mhs ->nim }}</td>
         <td>{{ $mhs ->nama }}</td>
-        <td>{{ $mhs ->kelas }}</td>
+        <td>{{ $mhs ->kelas->nama_kelas}}</td>
         <td>{{ $mhs ->jurusan }}</td>
         <td>
             <form action="{{ route('mahasiswa.destroy',['mahasiswa'=>$mhs->nim]) }}" method="POST">
@@ -64,5 +64,5 @@
     </div>
     @endif
 </table>
-{{ $mahasiswa->links() }}
+{{ $paginate->links() }}
 @endsection
