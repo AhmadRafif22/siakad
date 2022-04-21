@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use App\Models\Kelas;
 use App\Models\Mahasiswa_Matakuliah;
 
+use Illuminate\Support\Facades\Storage;
+
+use PDF;
+
 class MahasiswaController extends Controller
 {
     /**
@@ -28,8 +32,8 @@ class MahasiswaController extends Controller
 
         // yang semila Mahasiswa::all. diubah menjadi with() yang menyatakan relasi
         $mahasiswa = Mahasiswa::with('kelas')->get();
-        $paginate = Mahasiswa::OrderBy('id_mahasiswa', 'asc')->paginate(2);
-        return view('mahasiswa.index', ['mahasiswa' => $mahasiswa, 'paginate' => $paginate]);
+        $mahasiswa = Mahasiswa::OrderBy('id_mahasiswa', 'asc')->paginate(3);
+        return view('mahasiswa.index', ['mahasiswa' => $mahasiswa]);
     }
 
     public function search(Request $request)
@@ -39,13 +43,12 @@ class MahasiswaController extends Controller
         $mahasiswa = DB::table('mahasiswa')
             ->where('nim', 'LIKE', "%{$search}%")
             ->orWhere('nama', 'LIKE', "%{$search}%")
-            ->orWhere('kelas', 'LIKE', "%{$search}%")
             ->orWhere('jurusan', 'LIKE', "%{$search}%")
             ->orWhere('jk', 'LIKE', "%{$search}%")
             ->orWhere('email', 'LIKE', "%{$search}%")
             ->orWhere('alamat', 'LIKE', "%{$search}%")
             ->orWhere('tanggalLahir', 'LIKE', "%{$search}%")
-            ->paginate(5);
+            ->paginate(3);
 
         return view('mahasiswa.index', ['mahasiswa' => $mahasiswa]);
     }
@@ -78,6 +81,10 @@ class MahasiswaController extends Controller
         // return redirect()->route('mahasiswa.index')
         //     ->with('success', 'Mahasiswa Berhasil Ditambahkan');
 
+        if ($request->file('image')) {
+            $image_name = $request->file('image')->store('images', 'public');
+        }
+
         $mahasiswa = new Mahasiswa;
         $mahasiswa->nim = $request->get('Nim');
         $mahasiswa->nama = $request->get('Nama');
@@ -86,6 +93,8 @@ class MahasiswaController extends Controller
         $mahasiswa->email = $request->get('Email');
         $mahasiswa->alamat = $request->get('Alamat');
         $mahasiswa->tanggalLahir = $request->get('TanggalLahir');
+
+        $mahasiswa->foto = $image_name;
 
         $kelas = new Kelas;
         $kelas->id = $request->get('Kelas');
@@ -152,6 +161,13 @@ class MahasiswaController extends Controller
         //     ]);
 
         $mahasiswa = Mahasiswa::with('kelas')->where('nim', $nim)->first();
+
+        if ($mahasiswa->foto && file_exists(storage_path('app/public/' . $mahasiswa->foto))) {
+            Storage::delete('public/' . $mahasiswa->foto);
+        }
+        $image_name = $request->file('image')->store('images', 'public');
+        $mahasiswa->foto = $image_name;
+
         $mahasiswa->nim = $request->get('Nim');
         $mahasiswa->nama = $request->get('Nama');
         $mahasiswa->jurusan = $request->get('Jurusan');
@@ -190,5 +206,16 @@ class MahasiswaController extends Controller
             ->where('id_mahasiswa', $id)->first();
 
         return view('mahasiswa.khs', compact('khs'));
+    }
+
+    public function cetak_khs($id)
+    {
+        $khs = Mahasiswa_Matakuliah::where('mahasiswa_id', $id)
+            ->with('matakuliah')->get();
+        $khs->mahasiswa = Mahasiswa::with('kelas')
+            ->where('id_mahasiswa', $id)->first();
+
+        $pdf = PDF::loadview('mahasiswa.print_khs', ['khs' => $khs]);
+        return $pdf->stream();
     }
 };

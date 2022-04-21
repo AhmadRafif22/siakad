@@ -22,3 +22,5 @@ Route::resource('/mahasiswa', MahasiswaController::class);
 Route::get('/mahasiswa/search/kunci/', [MahasiswaController::class, 'search'])->name('search');
 
 Route::get('/mahasiswa/nilai/{id}', [MahasiswaController::class, 'khs'])->name('mahasiswa.khs');
+
+Route::get('/mahasiswa/nilai/cetak/{id}', [MahasiswaController::class, 'cetak_khs'])->name('mahasiswa.cetak_khs');
